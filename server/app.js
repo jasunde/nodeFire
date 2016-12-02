@@ -3,6 +3,7 @@ var app = express();
 var path = require('path');
 var bodyParser = require('body-parser');
 var decoder = require('./modules/decoder');
+var userInfo = require('./modules/userInfo');
 var mongoConnection = require('./modules/mongo-connection');
 var privateData = require('./routes/private-data');
 
@@ -15,6 +16,7 @@ mongoConnection.connect();
 
 // Decodes the token in the request header and attaches the decoded token to req.decodedToken on the request.
 app.use(decoder.token);
+app.use(userInfo);
 
 /* Whatever you do below this is protected by your authentication. */
 

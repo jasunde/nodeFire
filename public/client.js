@@ -3,6 +3,35 @@ app.controller("SampleCtrl", function($firebaseAuth, $http) {
   var auth = $firebaseAuth();
   var self = this;
 
+  self.currentUser;
+  self.newUser = {};
+
+  // Post a new user
+  function addUser() {
+    if(self.currentUser) {
+      self.currentUser.getToken()
+        .then(function (idToken) {
+          console.log('idToken', idToken);
+          $http({
+            method: 'POST',
+            url: '/privateData',
+            headers: {
+              id_token: idToken
+            },
+            data: self.newUser
+          })
+            .then(function (response) {
+              console.log('addUser success:', response);
+            })
+            .catch(function (err) {
+              console.error('addUser error:', err);
+            });
+        });
+    }
+  }
+
+  self.addUser = addUser;
+
   // This code runs whenever the user logs in
   self.logIn = function(){
     auth.$signInWithPopup("google").then(function(firebaseUser) {
@@ -19,6 +48,7 @@ app.controller("SampleCtrl", function($firebaseAuth, $http) {
   auth.$onAuthStateChanged(function(firebaseUser){
     // firebaseUser will be null if not logged in
     if(firebaseUser) {
+      self.currentUser = firebaseUser;
       // This is where we make our call to our server
       firebaseUser.getToken().then(function(idToken){
         $http({
@@ -28,6 +58,7 @@ app.controller("SampleCtrl", function($firebaseAuth, $http) {
             id_token: idToken
           }
         }).then(function(response){
+          console.log(response);
           self.secretData = response.data;
         });
       });
