@@ -18,7 +18,6 @@ var tokenDecoder = function(req, res, next){
     .catch(function(error) {
       // If the id_token isn't right, you end up in this callback function
       // Here we are returning a forbidden error
-      console.log('verify token error:', error);
       console.log('User token could not be verified');
       res.send(403);
     });
