@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html ng-app="secretsApp">
+  <head>
+    <meta charset="utf-8">
+    <title>nodeFire with Authentication</title>
+    <link rel="stylesheet" href="app/vendor/bootstrap.min.css">
+    <!-- AngularJS -->
+    <script src="app/vendor/angular.min.js"></script>
+    <script src="app/vendor/angular-route.min.js"></script>
+
+    <!-- Firebase -->
+    <script src="app/vendor/firebase.js"></script>
+
+    <!-- AngularFire -->
+    <script src="app/vendor/angularfire.min.js"></script>
+
+    <!-- Firebase Config -->
+    <script src="config.js"></script>
+
+    <!-- Angular Application with Authentication -->
+    <script src="app/app.module.js"></script>
+    <script src="app/app.routes.js"></script>
+
+    <!-- Services -->
+    <script src="app/services/auth.js"></script>
+    <script src="app/services/user.js"></script>
+
+    <!-- Secrets -->
+    <script src="app/secrets/secretsController.js"></script>
+
+    <!-- Users -->
+    <script src="app/user/userController.js"></script>
+
+    <!-- Nav -->
+    <script src="app/nav/navController.js"></script>
+
+  </head>
+  <!-- <body ng-controller="SecretsController as sc"> -->
+  <body>
+    <h1>Hi! Log in to get some secret data from the server!</h1>
+
+    <nav ng-include="'app/nav/navView.html'" ng-Controller="NavController"></nav>
+    <div ng-include="'app/user/userView.html'"></div>
+
+    <main ng-view></main>
+
+  </body>
+</html>

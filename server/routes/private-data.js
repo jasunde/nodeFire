@@ -24,32 +24,12 @@ router.get("/", function(req, res){
     { secrecyLevel: { $lte: req.userInfo.clearanceLevel } },
     function (err, secrets){
       if (err) {
-        console.log('Error COMPLETING secrecyLevel query task', err);
+        console.log('GET secrets error:', err);
         res.sendStatus(500);
       } else {
         res.send(secrets);
       }
     });
-});
-
-/**
- * Add a user with given clearanceLevel to database
- */
-router.post('/', function (req, res) {
-  var newUser = req.body;
-  if(req.userInfo.clearanceLevel >= newUser.clearanceLevel) {
-    User.create(newUser)
-      .then(function (user) {
-        res.status(201).send(user);
-      })
-      .catch(function (err) {
-        console.trace('POST new user error:', err);
-        res.sendStatus(500);
-      });
-  } else {
-    console.trace('Unauthorized post. Insufficient clearanceLevel.');
-    res.sendStatus(401);
-  }
 });
 
 module.exports = router;

@@ -1,0 +1,13 @@
+<h2>Add a User</h2>
+<form ng-submit="sc.addUser()">
+  <div class="form-group">
+    <label for="email">Email</label>
+    <input type="text" class="form-control" id="email" placeholder="user@email.com" ng-model="sc.newUser.email">
+  </div>
+  <div class="form-group">
+    <select name="clearance-level" id="clearanceLevel" ng-options="secret.secrecyLevel as secret.secrecyLevel for secret in sc.secretData | orderBy: 'secrecyLevel'" ng-model="sc.newUser.clearanceLevel"></select>
+  </div>
+  <div class="form-group">
+    <button class="btn btn-default">Add User</button>
+  </div>
+</form>
