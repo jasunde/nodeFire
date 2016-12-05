@@ -48,6 +48,7 @@ angular.module('secretsApp')
         })
         .then(function (response) {
           console.log('addUser success:', response);
+          getUsers();
         })
         .catch(function (err) {
           console.error('addUser error:', err);
@@ -55,4 +56,5 @@ angular.module('secretsApp')
       });
     }
   }
+
 }]);
