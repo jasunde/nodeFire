@@ -24,4 +24,4 @@ var tokenDecoder = function(req, res, next){
   }
 }
 
-module.exports = { token: tokenDecoder };
+module.exports =  tokenDecoder;

@@ -1,26 +1,14 @@
 angular.module('secretsApp')
-.controller("SecretsController", ['User', '$http', '$scope', function(User, $http, $scope) {
-  $scope.secretData = [];
+.controller("SecretsController", ['User', 'Secrets', '$http', '$scope', function(User, Secrets, $http, $scope) {
+  $scope.currentUser = User.currentUser();
+  $scope.secretData = Secrets.list();
 
   /**
    * Listen for user state change
    */
   User.onChange(function() {
-    var idToken = User.idToken();
-
-    if(idToken) {
-      $http({
-        method: 'GET',
-        url: '/privateData',
-        headers: {
-          id_token: idToken
-        }
-      }).then(function(response){
-        $scope.secretData = response.data;
-      });
-    } else {
-      $scope.secretData = [];
-    }
+    $scope.secretData = Secrets.list();
+    $scope.currentUser = User.currentUser();
   });
 
 }]);

@@ -10,6 +10,11 @@ var users = require('./routes/users');
 
 var portDecision = process.env.PORT || 5000;
 
+app.use(function (req, res, next) {
+  console.log(req.path);
+  next();
+});
+
 app.use(express.static('public'));
 app.use(bodyParser.json());
 
@@ -17,10 +22,10 @@ app.get('/', function (req, res) {
   res.sendFile(path.join(__dirname, '../public/app/index.html'))
 });
 
-mongoConnection.connect();
+// mongoConnection.connect();
 
 // Decodes the token in the request header and attaches the decoded token to req.decodedToken on the request.
-app.use(decoder.token);
+app.use(decoder);
 app.use(userInfo);
 
 /* Whatever you do below this is protected by your authentication. */
@@ -28,7 +33,7 @@ app.use(userInfo);
 app.use('/users', users)
 
 // This is the route for your secretData. The request gets here after it has been authenticated.
-app.use("/privateData", privateData);
+app.use('/privateData', privateData);
 
 app.listen(portDecision, function(){
   console.log("Listening on port: ", portDecision);

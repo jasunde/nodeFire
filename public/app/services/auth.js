@@ -16,21 +16,14 @@ angular.module('secretsApp')
 
   /**
    * Add state change listener to auth
-   * @param  {function} callback Callback function receives idToken and firebaseUser as parameters
    */
   function onChange(callback) {
     auth.$onAuthStateChanged(function(firebaseUser){
       if(firebaseUser) {
-        firebaseUser.getToken()
-        .then(function(idToken){
-            callback(idToken, firebaseUser);
-        })
-        .catch(function (err) {
-          console.trace('firebaseUser getToken error:', err);
-        });
+        callback(firebaseUser);
       } else {
         console.log('Not logged in or not authorized.');
-        callback(null, null);
+        callback();
       }
     });
   }

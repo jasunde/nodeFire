@@ -1,16 +1,38 @@
-var mongoose = require('mongoose');
-var connectionString = require('./database-config');
+// Bring Mongoose into the app
+var mongoose = require( 'mongoose' );
 
-var connectToMongoDatabase = function() {
-  mongoose.connect(connectionString);
+// Build the connection string
+var dbURI = require('./database-config');
 
-  mongoose.connection.on('connected', function () {
-    console.log('Mongoose connected to ', connectionString);
+// Create the database connection
+mongoose.connect(dbURI);
+
+// CONNECTION EVENTS
+// When successfully connected
+mongoose.connection.on('connected', function () {
+  console.log('Mongoose default connection open to ' + dbURI);
+});
+
+// If the connection throws an error
+mongoose.connection.on('error',function (err) {
+  console.log('Mongoose default connection error: ' + err);
+});
+
+// When the connection is disconnected
+mongoose.connection.on('disconnected', function () {
+  console.log('Mongoose default connection disconnected');
+});
+
+// If the Node process ends, close the Mongoose connection
+process.on('SIGINT', function() {
+  mongoose.connection.close(function () {
+    console.log('Mongoose default connection disconnected through app termination');
+    process.exit(0);
   });
+});
 
-  mongoose.connection.on('error', function (err) {
-    console.log('Mongoose failed to connect because error: ', err);
-  });
-}
+// BRING IN YOUR SCHEMAS & MODELS // For example
+require('../models/secret');
+require('../models/user');
 
-module.exports = { connect: connectToMongoDatabase };
+// module.exports = { connect: connectToMongoDatabase };

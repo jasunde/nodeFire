@@ -3,6 +3,7 @@ var router = express.Router();
 var User = require('../models/user');
 
 router.get('/', function (req, res) {
+  if(req.userInfo) {
   User.find({})
     .then(function(users) {
       res.send(users);
@@ -11,6 +12,10 @@ router.get('/', function (req, res) {
       console.trace('GET all users error:', err);
       res.sendStatus(500);
     });
+  } else {
+    console.log('Unauthorized GET.');
+    res.sendStatus(403);
+  }
 })
 
 /**

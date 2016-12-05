@@ -7,6 +7,7 @@ angular.module('secretsApp')
   })
   .when('/admin', {
     templateUrl: 'app/admin/adminView.html',
+    controller: 'AdminController'
   })
   .otherwise({
     redirectTo: '/secrets'

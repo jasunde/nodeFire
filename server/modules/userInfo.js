@@ -1,10 +1,10 @@
+var mongoose = require('mongoose');
 var User = require('../models/user');
 
 function userInfo(req, res, next) {
   if(req.decodedToken) {
     User.findOne({email: req.decodedToken.email})
       .then(function (userInfo) {
-        console.log(userInfo);
         req.userInfo = userInfo;
         next();
       })

@@ -1,11 +1,11 @@
 angular.module('secretsApp')
-.factory('User', ['Auth', function UserFactory(Auth) {
+.factory('User', ['Auth', 'Secrets', function UserFactory(Auth, Secrets) {
   var currentUser = null;
   var idToken = null;
 
   /**
-   * Log in a user
-   */
+  * Log in a user
+  */
   function logIn() {
     return Auth.logIn()
     .then(function (user) {
@@ -14,24 +14,41 @@ angular.module('secretsApp')
   };
 
   /**
-   * Log out a user
-   */
+  * Log out a user
+  */
   function logOut() {
     return Auth.logOut()
     .then(function () {
       currentUser = null;
-    })
+      idToken = null;
+      Secrets.get(null);
+    });
   }
 
   /**
-   * Add event listener for user state change
-   * @param  {Function} callback To run after user state change
-   */
+  * Add event listener for user state change
+  * @param  {Function} callback To run after user state change
+  */
   function onChange(callback) {
-    Auth.onChange(function(token, user) {
-      idToken = token;
+    Auth.onChange(function(user) {
       currentUser = user;
+
+    if(currentUser) {
+      currentUser.getToken()
+      .then(function(token){
+        Secrets.get(token)
+        .then(function () {
+          idToken = token;
+          callback();
+        });
+      })
+      .catch(function (err) {
+        console.trace('firebaseUser getToken error:', err);
+      });
+    } else {
+      idToken = null;
       callback();
+    }
     });
   }
 

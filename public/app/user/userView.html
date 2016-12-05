@@ -1,8 +1,12 @@
-<div ng-controller="UserController">
-  <button ng-if="currentUser == null" ng-click="logIn()">
+<form ng-controller="UserController" class="navbar-form navbar-right">
+  <button ng-if="currentUser == null" ng-click="logIn()"
+    class="btn btn-default"
+  >
     Log In
   </button>
-  <button ng-if="currentUser != null" ng-click="logOut()">
+  <button ng-if="currentUser != null" ng-click="logOut()"
+    class="btn btn-default"
+  >
     Log Out
   </button>
-</div>
+</form>

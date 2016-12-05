@@ -1,12 +1,16 @@
-<ul>
-  <li ng-class="{'active': isActive('/secrets')}">
-    <a href="#secrets">
-      Secrets
-    </a>
-  </li>
-  <li ng-class="{'active': isActive('/admin')}">
-    <a href="#admin">
-      Admin
-    </a>
-  </li>
-</ul>
+<div class="container-fluid">
+  <ul class="nav navbar-nav">
+    <li ng-class="{'active': isActive('/secrets')}">
+      <a href="#secrets">
+        Secrets
+      </a>
+    </li>
+    <li ng-class="{'active': isActive('/admin')}">
+      <a href="#admin">
+        Admin
+      </a>
+    </li>
+  </ul>
+
+  <div ng-include="'app/user/userView.html'"></div>
+</div>
