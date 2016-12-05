@@ -34,15 +34,13 @@ angular.module('secretsApp')
 
   // Post a new user
   function addUser() {
+    console.log('adding user...')
     if(User.idToken()) {
-      User.idToken()
-      .then(function (idToken) {
-        console.log('idToken', idToken);
         $http({
           method: 'POST',
           url: '/users',
           headers: {
-            id_token: idToken
+            id_token: User.idToken()
           },
           data: $scope.newUser
         })
@@ -53,8 +51,9 @@ angular.module('secretsApp')
         .catch(function (err) {
           console.error('addUser error:', err);
         });
-      });
     }
   }
+
+  $scope.addUser = addUser;
 
 }]);
